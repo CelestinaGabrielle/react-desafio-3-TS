@@ -1,59 +1,37 @@
-import React, { useState } from 'react';
-import Card from '.';
-import { Button } from "../../components/Button";
-import { Header } from "../../components/Header";
-import { Input } from "../../components/Input";
+// src/pages/Cadastro.jsx
+import React from 'react';
 
 const Cadastro = () => {
-  // Estado para armazenar os valores dos campos
-  const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    senha: ''
-  });
-
-  // Função para lidar com a mudança nos campos
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Função para lidar com o envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Dados enviados:', formData);
-    // Aqui você pode implementar a lógica para enviar os dados para uma API
+    console.log('Formulário de cadastro enviado!');
   };
 
   return (
-    <Card>
-      <Header title="Cadastro de Usuário" />
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h1>Página de Cadastro</h1>
       <form onSubmit={handleSubmit}>
-        <Input
+        <input
           type="text"
-          name="nome"
           placeholder="Nome"
-          value={formData.nome}
-          onChange={handleChange}
+          style={{ margin: '10px', padding: '10px', width: '200px' }}
         />
-        <Input
+        <input
           type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
+          placeholder="E-mail"
+          style={{ margin: '10px', padding: '10px', width: '200px' }}
         />
-        <Input
+        <input
           type="password"
-          name="senha"
           placeholder="Senha"
-          value={formData.senha}
-          onChange={handleChange}
+          style={{ margin: '10px', padding: '10px', width: '200px' }}
         />
-        <Button type="submit">Cadastrar</Button>
+        <button type="submit" style={{ padding: '10px 20px' }}>
+          Cadastrar
+        </button>
       </form>
-    </Card>
+    </div>
   );
 };
 
-export default Cadastro;
+export { Cadastro }; // Exportação nomeada

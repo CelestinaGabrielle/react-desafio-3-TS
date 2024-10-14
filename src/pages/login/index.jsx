@@ -4,7 +4,7 @@ import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { api } from "../../services/api";
-
+import { Link } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
@@ -24,7 +24,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleCreateAccount = () => {
-    navigate('../cadastro'); // Redireciona para a tela de cadastro
+    navigate("/cadastro"); // Redireciona para a tela de cadastro
   };
 
   const {
@@ -89,8 +89,9 @@ const Login = () => {
             </form>
             <Row>
               <EsqueciText>Esqueci minha senha</EsqueciText>
-              <CriarText>Criar Conta</CriarText>
-              <button onClick={handleCreateAccount}>Criar conta</button>
+              <Link to={"/cadastro"}>
+                <CriarText onClick={handleCreateAccount}>Criar Conta</CriarText>
+              </Link>
             </Row>
           </Wrapper>
         </Column>
