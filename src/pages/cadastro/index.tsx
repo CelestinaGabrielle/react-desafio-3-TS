@@ -5,7 +5,8 @@ import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { api } from "../../services/api";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { IFormInputs } from "./types";  // Importe a interface
 
 import {
   Container,
@@ -20,7 +21,7 @@ import {
   TextPrivacy,
 } from "./styles";
 
-const Cadastro = () => {
+const Cadastro: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -29,32 +30,35 @@ const Cadastro = () => {
 
   const {
     control,
-    handleSubmit,
+    handleSubmit, // Continue utilizando handleSubmit normalmente
     formState: { errors },
-  } = useForm({
+  } = useForm<IFormInputs>({
     reValidateMode: "onChange",
     mode: "onChange",
   });
 
-  const onSubmit = async (formData) => {
+  const onSubmit: SubmitHandler<IFormInputs> = async (formData) => {
     try {
-      const { data } = await api.get(
-        `/users?email=${formData.email}&senha=${formData.senha}`
-      );
+      const { data } = await api.post("/login", {
+        email: formData.email,
+        senha: formData.senha,
+      });
 
-      if (data.length && data[0].id) {
+      if (data?.user?.id) {
         navigate("/feed");
         return;
       }
 
       alert("Usuário ou senha inválido");
     } catch (e) {
-      //TODO: HOUVE UM ERRO
+      console.error("Erro ao tentar logar:", e);
+      alert("Houve um erro no login. Tente novamente.");
     }
   };
+
   return (
     <>
-      <Header />
+      <Header autenticado={false} />
       <Container>
         <Column>
           <Title>
@@ -72,16 +76,19 @@ const Cadastro = () => {
               <Input
                 placeholder="Nome"
                 leftIcon={<MdPerson />}
-                name="email"
-                control={control}
-              />
-              <Input
-                placeholder="E-mail"
-                leftIcon={<MdEmail />}
                 name="name"
                 control={control}
               />
+              {errors.name && <span>Nome é obrigatório</span>}
+              
+              <Input
+                placeholder="E-mail"
+                leftIcon={<MdEmail />}
+                name="email"
+                control={control}
+              />
               {errors.email && <span>E-mail é obrigatório</span>}
+
               <Input
                 type="password"
                 placeholder="Senha"
@@ -89,7 +96,8 @@ const Cadastro = () => {
                 name="senha"
                 control={control}
               />
-              {errors.senha && <span>Senha é obrigatório</span>}
+              {errors.senha && <span>Senha é obrigatória</span>}
+
               <Button
                 title="Criar minha conta"
                 variant="secondary"
@@ -102,7 +110,7 @@ const Cadastro = () => {
             </TextPrivacy>
             <Row>
               <Infor>Já possui uma conta?</Infor>
-               <LoginText onClick={handleLogin}>Fazer login</LoginText>
+              <LoginText onClick={handleLogin}>Fazer login</LoginText>
             </Row>
           </Wrapper>
         </Column>

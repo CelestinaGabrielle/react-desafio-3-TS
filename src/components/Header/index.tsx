@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Button } from '../Button';
 
 import { Container, Wrapper, BuscarInputContainer, Input, Row, Menu, MenuRight, UserPicture} from './styles';
+import { IHeaderProps } from "./types";
 
-const Header = ({autenticado}) => {
+const Header: React.FC<IHeaderProps> = ({autenticado}) => {
 
   const navigate = useNavigate();
 

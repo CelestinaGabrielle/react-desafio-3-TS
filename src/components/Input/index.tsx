@@ -2,8 +2,10 @@ import React from 'react'
 import { Controller } from "react-hook-form";
 
 import {InputContainer, InputText, IconContainer } from './styles';
+import { IInputProps } from "./types";
 
-const Input = ({leftIcon, name, control, ...rest}) => {
+
+const Input: React.FC<IInputProps> = ({leftIcon, name, control, placeholder, type, ...rest}) => {
 
 
   return (

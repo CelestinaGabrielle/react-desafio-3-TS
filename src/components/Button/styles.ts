@@ -1,6 +1,10 @@
 import styled, {css}  from 'styled-components';
 
-export const ButtonContainer = styled.button`
+interface ButtonContainerProps {
+    variant: 'primary' | 'secondary';
+}
+
+export const ButtonContainer = styled.button<ButtonContainerProps>`
     background: #565656;
     border-radius: 22px;
     position: relative;

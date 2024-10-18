@@ -5,7 +5,9 @@ import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { api } from "../../services/api";
 
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+import { IFormInputs } from "../cadastro/types";
 
 import {
   Container,
@@ -19,7 +21,7 @@ import {
   Wrapper,
 } from "./styles";
 
-const Login = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCreateAccount = () => {
@@ -30,12 +32,12 @@ const Login = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IFormInputs>({
     reValidateMode: "onChange",
     mode: "onChange",
   });
 
-  const onSubmit = async (formData) => {
+  const onSubmit: SubmitHandler<IFormInputs> = async (formData) => {
     try {
       const { data } = await api.get(
         `/users?email=${formData.email}&senha=${formData.senha}`
@@ -56,7 +58,7 @@ const Login = () => {
 
   return (
     <>
-      <Header />
+      <Header autenticado={false} />
       <Container>
         <Column>
           <Title>

@@ -7,16 +7,16 @@ import { Header } from '../../components/Header';
 
 import { Container, Title, TitleHighlight, TextContent } from './styles';
 
-const Home = () => {
+const Home: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const handleClickSignIn = () => {
+    const handleClickSignIn = (): void => {
         navigate('/login')
     }
 
     return (<>
-        <Header />
+        <Header autenticado={false} />
         <Container>
             <div>
                 <Title>
